@@ -1,7 +1,6 @@
 <?php
 /**
  * Plugin Name: 10T Image Resize
- * Plugin URI: https://10t.co/
  * Author: 10T Web Design
  * Author URI: https://10t.co/
  * Description: Resize new JPEG, PNG, and WebP uploads and store them as WebP.
