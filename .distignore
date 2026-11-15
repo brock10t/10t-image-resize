@@ -1,0 +1,13 @@
+/.git
+/.github
+/.agents
+/.aws
+/.codex
+/tests
+/.wordpress-org
+/.distignore
+/.gitignore
+/AGENTS.md
+/ROADMAP.md
+/README.md
+/DEPLOYMENT.md

@@ -1,0 +1,47 @@
+name: Deploy to WordPress.org
+
+on:
+  push:
+    tags:
+      - '[0-9]*'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: wordpress-org-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    # Set this repository variable only after WordPress.org approves the plugin.
+    if: vars.WP_ORG_SLUG != ''
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Validate release version
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          php -l 10t-image-resize.php
+          python3 - <<'PY'
+          import os, re
+          from pathlib import Path
+          tag = os.environ['RELEASE_TAG']
+          if not re.fullmatch(r'\d+\.\d+\.\d+', tag):
+              raise SystemExit('Use a version tag such as 1.0.0 (no v prefix).')
+          header = Path('10t-image-resize.php').read_text()
+          readme = Path('readme.txt').read_text()
+          version = re.search(r'^\s*\* Version:\s*(\S+)', header, re.M).group(1)
+          stable = re.search(r'^Stable tag:\s*(\S+)', readme, re.M).group(1)
+          if tag != version or tag != stable:
+              raise SystemExit('Git tag, plugin Version, and readme Stable tag must match.')
+          PY
+      - name: Publish to WordPress.org SVN
+        uses: 10up/action-wordpress-plugin-deploy@stable
+        env:
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SLUG: ${{ vars.WP_ORG_SLUG }}
