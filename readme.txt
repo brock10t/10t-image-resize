@@ -1,4 +1,5 @@
 === 10T Image Resize ===
+Contributors: brock10t
 Tags: images, resize, webp, media, optimization
 Requires at least: 6.5
 Tested up to: 7.1
