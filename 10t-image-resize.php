@@ -126,7 +126,11 @@ final class TenT_Image_Resize {
 	}
 
 	private static function failure( $file, $error ) {
-		$file['error'] = sprintf( __( '10T Image Resize could not process this upload: %s', '10t-image-resize' ), $error->get_error_message() );
+		$file['error'] = sprintf(
+			/* translators: %s: Error message explaining why image processing failed. */
+			__( '10T Image Resize could not process this upload: %s', '10t-image-resize' ),
+			$error->get_error_message()
+		);
 		return $file;
 	}
 
