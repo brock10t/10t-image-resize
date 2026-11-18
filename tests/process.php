@@ -46,11 +46,11 @@ foreach ( array( 'WP_Image_Editor_Imagick', 'WP_Image_Editor_GD' ) as $backend )
 		remove_filter( 'wp_image_editors', $select );
 		continue;
 	}
-	foreach ( array( array( 'jpeg', 2400, 1600, 1200, 800 ), array( 'png', 800, 2400, 400, 1200 ), array( 'png', 80, 40, 80, 40 ), array( 'webp', 2400, 800, 1200, 400 ), array( 'webp', 80, 40, 80, 40 ), array( 'gif', 1600, 800, 1600, 800 ) ) as $case ) {
+	foreach ( array( array( 'jpeg', 2400, 1600, 1200, 800 ), array( 'jfif', 2400, 1600, 1200, 800 ), array( 'JFIF', 80, 40, 80, 40 ), array( 'png', 800, 2400, 400, 1200 ), array( 'png', 80, 40, 80, 40 ), array( 'webp', 2400, 800, 1200, 400 ), array( 'webp', 80, 40, 80, 40 ), array( 'gif', 1600, 800, 1600, 800 ) ) as $case ) {
 		list( $format, $width, $height, $expected_w, $expected_h ) = $case;
 		$path = tempnam( sys_get_temp_dir(), 'tent-test-' );
 		$image = imagecreatetruecolor( $width, $height );
-		$write = 'image' . $format;
+		$write = 'image' . ( 'jfif' === strtolower( $format ) ? 'jpeg' : $format );
 		$write( $image, $path );
 		imagedestroy( $image );
 		$before = hash_file( 'sha256', $path );
@@ -134,3 +134,5 @@ if ( ! empty( $argv[2] ) && class_exists( 'Imagick' ) && Imagick::queryFormats( 
 } else {
 	echo "SKIP: HEIC integration requires Imagick HEIC decoding and a fixture path as the second argument.\n";
 }
+
+check( ! isset( TenT_Image_Resize::upload_mimes( array( 'png' => 'image/png' ) )['jfif'] ), 'JFIF is not enabled when JPEG is disallowed' );

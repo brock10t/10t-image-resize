@@ -4,7 +4,7 @@ Tags: images, resize, webp, media, optimization
 Requires at least: 6.7
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ Resize new image uploads without enlarging them, and convert JPEG, PNG, and HEIC
 
 10T Image Resize processes new images before WordPress stores them in the media library.
 
-* Convert JPEG, PNG, and HEIC uploads to WebP.
+* Convert JPEG (including .jfif), PNG, and HEIC uploads to WebP.
 * Resize oversized WebP uploads; leave smaller WebP files unchanged.
 * Preserve aspect ratio without cropping or enlargement.
 * Configure maximum width, maximum height, and WebP quality under Settings > 10T Image Resize.
@@ -60,6 +60,9 @@ No. WordPress's normal file permissions still apply.
 An administrator notice explains the requirement. JPEG, PNG, and WebP uploads are rejected until a compatible editor is available. Other file types continue through WordPress normally.
 
 == Changelog ==
+
+= 1.2.0 =
+* Recognize .jfif JPEG uploads and convert them to WebP.
 
 = 1.1.0 =
 * Add HEIC/HEIF conversion to WebP with server capability checks.

@@ -4,7 +4,7 @@
  * Author: 10T Web Design
  * Author URI: https://10t.co/
  * Description: Resize new JPEG, PNG, HEIC, and WebP uploads and store them as WebP.
- * Version: 1.1.0
+ * Version: 1.2.0
  * Requires at least: 6.7
  * Requires PHP: 7.4
  * License: GPLv2 or later
@@ -20,11 +20,20 @@ final class TenT_Image_Resize {
 	const OPTION = 'tent_image_resize';
 
 	public static function boot() {
+		add_filter( 'upload_mimes', array( __CLASS__, 'upload_mimes' ) );
 		add_filter( 'wp_handle_upload_prefilter', array( __CLASS__, 'process' ) );
 		add_filter( 'wp_handle_sideload_prefilter', array( __CLASS__, 'process' ) );
 		add_action( 'admin_menu', array( __CLASS__, 'menu' ) );
 		add_action( 'admin_init', array( __CLASS__, 'register' ) );
 		add_action( 'admin_notices', array( __CLASS__, 'notice' ) );
+	}
+
+	/** Recognize JFIF as JPEG without enabling JPEG where it has been disallowed. */
+	public static function upload_mimes( $mimes ) {
+		if ( in_array( 'image/jpeg', $mimes, true ) && ! isset( $mimes['jfif'] ) ) {
+			$mimes['jfif'] = 'image/jpeg';
+		}
+		return $mimes;
 	}
 
 	public static function settings() {
