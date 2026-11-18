@@ -3,9 +3,9 @@
  * Plugin Name: 10T Image Resize
  * Author: 10T Web Design
  * Author URI: https://10t.co/
- * Description: Resize new JPEG, PNG, and WebP uploads and store them as WebP.
- * Version: 1.0.0
- * Requires at least: 6.5
+ * Description: Resize new JPEG, PNG, HEIC, and WebP uploads and store them as WebP.
+ * Version: 1.1.0
+ * Requires at least: 6.7
  * Requires PHP: 7.4
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -51,7 +51,7 @@ final class TenT_Image_Resize {
 			return $file;
 		}
 		$mime = wp_get_image_mime( $file['tmp_name'] );
-		if ( ! in_array( $mime, array( 'image/jpeg', 'image/png', 'image/webp' ), true ) ) {
+		if ( ! in_array( $mime, array( 'image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif' ), true ) ) {
 			return $file;
 		}
 		// Respect allowed upload types before changing the extension or MIME type.
@@ -64,8 +64,15 @@ final class TenT_Image_Resize {
 			$file['error'] = __( '10T Image Resize requires Imagick or GD with WebP support. Ask your server administrator to enable it, then retry the upload.', '10t-image-resize' );
 			return $file;
 		}
+		if ( wp_is_heic_image_mime_type( $mime ) && ! wp_image_editor_supports( array( 'mime_type' => $mime ) ) ) {
+			$file['error'] = __( '10T Image Resize: HEIC uploads require Imagick with HEIC/HEIF decoding support (libheif). Ask your server administrator to enable it, then retry the upload.', '10t-image-resize' );
+			return $file;
+		}
 		$editor = wp_get_image_editor( $file['tmp_name'], array( 'mime_type' => $mime ) );
 		if ( is_wp_error( $editor ) ) {
+			if ( wp_is_heic_image_mime_type( $mime ) ) {
+				return self::failure( $file, new WP_Error( 'heic_decode', __( 'The server could not decode this HEIC image. Ask your server administrator to check Imagick and libheif HEVC decoder support, or upload a JPEG/PNG export.', '10t-image-resize' ) ) );
+			}
 			return self::failure( $file, $editor );
 		}
 		if ( ! $editor->supports_mime_type( 'image/webp' ) ) {
@@ -156,7 +163,7 @@ final class TenT_Image_Resize {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
-		echo '<div class="wrap"><h1>10T Image Resize</h1><p>' . esc_html__( 'New JPEG and PNG uploads become WebP. WebP uploads are resized only when needed. Images keep their aspect ratio and are never enlarged. Original uploads are discarded after processing. GIF and SVG files are unchanged; existing media is unaffected.', '10t-image-resize' ) . '</p><form action="options.php" method="post">';
+		echo '<div class="wrap"><h1>10T Image Resize</h1><p>' . esc_html__( 'New JPEG, PNG, and HEIC uploads become WebP. WebP uploads are resized only when needed. Images keep their aspect ratio and are never enlarged. Original uploads are discarded after processing. GIF and SVG files are unchanged; existing media is unaffected.', '10t-image-resize' ) . '</p><form action="options.php" method="post">';
 		settings_fields( 'tent_image_resize' );
 		do_settings_sections( 'tent-image-resize' );
 		submit_button();
@@ -164,8 +171,11 @@ final class TenT_Image_Resize {
 	}
 
 	public static function notice() {
+		if ( current_user_can( 'manage_options' ) && self::available() && ! wp_image_editor_supports( array( 'mime_type' => 'image/heic' ) ) ) {
+			echo '<div class="notice notice-warning"><p>' . esc_html__( '10T Image Resize: HEIC conversion is unavailable. Enable Imagick with HEIC/HEIF support (libheif) to process HEIC uploads. Other supported image formats are unaffected.', '10t-image-resize' ) . '</p></div>';
+		}
 		if ( current_user_can( 'manage_options' ) && ! self::available() ) {
-			echo '<div class="notice notice-error"><p>' . esc_html__( '10T Image Resize: Imagick or GD with WebP support is unavailable. JPEG, PNG, and WebP uploads will be rejected until your server administrator enables a compatible image editor.', '10t-image-resize' ) . '</p></div>';
+			echo '<div class="notice notice-error"><p>' . esc_html__( '10T Image Resize: Imagick or GD with WebP support is unavailable. JPEG, PNG, HEIC, and WebP uploads will be rejected until your server administrator enables a compatible image editor.', '10t-image-resize' ) . '</p></div>';
 		}
 	}
 }

@@ -1,20 +1,20 @@
 === 10T Image Resize ===
 Contributors: brock10t
 Tags: images, resize, webp, media, optimization
-Requires at least: 6.5
+Requires at least: 6.7
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Resize new image uploads without enlarging them, and convert JPEG and PNG uploads to WebP before they enter your media library.
+Resize new image uploads without enlarging them, and convert JPEG, PNG, and HEIC uploads to WebP before they enter your media library.
 
 == Description ==
 
 10T Image Resize processes new images before WordPress stores them in the media library.
 
-* Convert JPEG and PNG uploads to WebP.
+* Convert JPEG, PNG, and HEIC uploads to WebP.
 * Resize oversized WebP uploads; leave smaller WebP files unchanged.
 * Preserve aspect ratio without cropping or enlargement.
 * Configure maximum width, maximum height, and WebP quality under Settings > 10T Image Resize.
@@ -27,6 +27,8 @@ Only the processed image is stored; the uploaded original is not retained. WordP
 Requires Imagick or GD with WebP encoding support. The plugin displays an administrator notice when no compatible editor is available and rejects affected uploads with an explanation. Processing failures also reject the upload.
 
 Animated PNG and WebP preservation is not supported: processing may flatten these images. GIFs are never processed. Importers that bypass WordPress's standard upload and sideload handlers also bypass this plugin.
+
+HEIC/HEIF conversion requires Imagick built with libheif decoding support; GD alone cannot decode HEIC. WordPress 6.7 or later is required for native HEIC detection. HEIC image sequences and Live Photo motion are not preserved. Upload permissions remain controlled by WordPress.
 
 == Installation ==
 
@@ -58,6 +60,10 @@ No. WordPress's normal file permissions still apply.
 An administrator notice explains the requirement. JPEG, PNG, and WebP uploads are rejected until a compatible editor is available. Other file types continue through WordPress normally.
 
 == Changelog ==
+
+= 1.1.0 =
+* Add HEIC/HEIF conversion to WebP with server capability checks.
+* Require WordPress 6.7 for native HEIC detection.
 
 = 1.0.0 =
 * Initial release with configurable dimensions and quality, WebP conversion, and server support notices.
