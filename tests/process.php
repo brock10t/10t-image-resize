@@ -33,7 +33,7 @@ function wp_generate_password( $length = 12, $special = true, $extra = false ) {
 function __( $text, $domain = '' ) { return $text; }
 add_filter( 'pre_option', static function ( $pre, $name, $default ) { return false === $default ? 0 : $default; }, 10, 3 );
 function current_user_can( $cap ) { return true; }
-require dirname( __DIR__ ) . '/10t-image-resize.php';
+require dirname( __DIR__ ) . '/10t-web-design-image-resize.php';
 function check( $condition, $message ) {
 	if ( ! $condition ) { throw new RuntimeException( $message ); }
 	echo "PASS: $message\n";

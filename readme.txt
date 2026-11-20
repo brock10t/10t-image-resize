@@ -1,4 +1,4 @@
-=== 10T Image Resize ===
+=== 10T Web Design Image Resize ===
 Contributors: brock10t
 Tags: images, resize, webp, media, optimization
 Requires at least: 6.7
@@ -12,12 +12,12 @@ Resize new image uploads without enlarging them, and convert JPEG, PNG, and HEIC
 
 == Description ==
 
-10T Image Resize processes new images before WordPress stores them in the media library.
+10T Web Design Image Resize processes new images before WordPress stores them in the media library.
 
 * Convert JPEG (including .jfif), PNG, and HEIC uploads to WebP.
 * Resize oversized WebP uploads; leave smaller WebP files unchanged.
 * Preserve aspect ratio without cropping or enlargement.
-* Configure maximum width, maximum height, and WebP quality under Settings > 10T Image Resize.
+* Configure maximum width, maximum height, and WebP quality under Settings > 10T Web Design Image Resize.
 * Default to a maximum width and height of 1200 pixels and quality of 82.
 * Leave GIF and SVG files unchanged, subject to WordPress's normal upload permissions.
 * Apply JPEG camera orientation before resizing.
@@ -32,9 +32,9 @@ HEIC/HEIF conversion requires Imagick built with libheif decoding support; GD al
 
 == Installation ==
 
-1. Upload the 10t-image-resize folder to /wp-content/plugins/.
-2. Activate 10T Image Resize under Plugins.
-3. Open Settings > 10T Image Resize to configure dimensions and quality.
+1. Upload the 10t-web-design-image-resize folder to /wp-content/plugins/.
+2. Activate 10T Web Design Image Resize under Plugins.
+3. Open Settings > 10T Web Design Image Resize to configure dimensions and quality.
 4. Upload new images through the media library.
 
 == Frequently Asked Questions ==

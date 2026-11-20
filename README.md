@@ -1,4 +1,4 @@
-# 10T Image Resize
+# 10T Web Design Image Resize
 
 Copyright (c) 2026 10T Web Design. Licensed under the [GNU General Public License, version 2 or later](LICENSE).
 
@@ -6,7 +6,7 @@ See [DEPLOYMENT.md](DEPLOYMENT.md) for GitHub setup and automated WordPress.org 
 
 Processes new WordPress image uploads before they enter the media library. JPEG (including .jfif), PNG, and HEIC files become WebP; oversized WebP files are resized. Images fit within the configured width and height, preserving aspect ratio without enlargement. GIFs and SVGs pass through unchanged, subject to WordPress's normal upload permissions.
 
-Activate **10T Image Resize** in Plugins, then open **Settings > 10T Image Resize**. Defaults are 1200 pixels wide, 1200 pixels tall, and WebP quality 82. Quality applies to converted images and resized WebP files. Smaller WebP files retain their original bytes. JPEG camera orientation is applied before resizing.
+Activate **10T Web Design Image Resize** in Plugins, then open **Settings > 10T Web Design Image Resize**. Defaults are 1200 pixels wide, 1200 pixels tall, and WebP quality 82. Quality applies to converted images and resized WebP files. Smaller WebP files retain their original bytes. JPEG camera orientation is applied before resizing.
 
 Requires WordPress 6.7+, PHP 7.4+, and a WordPress image editor with WebP encoding support (Imagick or GD). WordPress chooses the editor, normally preferring Imagick. Missing WebP support produces an administrator notice and an upload error. Other processing failures also reject the upload rather than saving an unprocessed original.
 
