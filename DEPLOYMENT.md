@@ -5,7 +5,7 @@ Development lives on GitHub. Tagged releases are published using [10up's deploym
 ## Initial setup
 
 1. Add your WordPress.org username as the `Contributors:` field in `readme.txt`.
-2. Submit a plugin ZIP for WordPress.org review. Include only `10t-image-resize.php`, `readme.txt`, and `LICENSE`, inside a `10t-image-resize` folder.
+2. Submit a plugin ZIP for WordPress.org review. Include only `10t-web-design-image-resize.php`, `readme.txt`, and `LICENSE`, inside a `10t-web-design-image-resize` folder.
 3. After approval, confirm the assigned plugin slug. If it differs, update the plugin text domain and release packaging accordingly.
 4. In GitHub, open Settings > Secrets and variables > Actions. Add repository secrets `SVN_USERNAME` and `SVN_PASSWORD` using your WordPress.org SVN credentials. Never commit credentials. Use the SVN password provided by WordPress.org account security settings.
 5. Add the repository variable `WP_ORG_SLUG` with the approved slug. Until this variable exists, the deployment job skips publishing.

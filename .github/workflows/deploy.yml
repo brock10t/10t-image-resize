@@ -25,14 +25,14 @@ jobs:
         env:
           RELEASE_TAG: ${{ github.ref_name }}
         run: |
-          php -l 10t-image-resize.php
+          php -l 10t-web-design-image-resize.php
           python3 - <<'PY'
           import os, re
           from pathlib import Path
           tag = os.environ['RELEASE_TAG']
           if not re.fullmatch(r'\d+\.\d+\.\d+', tag):
               raise SystemExit('Use a version tag such as 1.0.0 (no v prefix).')
-          header = Path('10t-image-resize.php').read_text()
+          header = Path('10t-web-design-image-resize.php').read_text()
           readme = Path('readme.txt').read_text()
           version = re.search(r'^\s*\* Version:\s*(\S+)', header, re.M).group(1)
           stable = re.search(r'^Stable tag:\s*(\S+)', readme, re.M).group(1)

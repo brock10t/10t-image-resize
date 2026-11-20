@@ -1,23 +1,23 @@
-=== 10T Image Resize ===
+=== 10T Web Design Image Resize ===
 Contributors: brock10t
 Tags: images, resize, webp, media, optimization
-Requires at least: 6.5
+Requires at least: 6.7
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Resize new image uploads without enlarging them, and convert JPEG and PNG uploads to WebP before they enter your media library.
+Resize new image uploads without enlarging them, and convert JPEG, PNG, and HEIC uploads to WebP before they enter your media library.
 
 == Description ==
 
-10T Image Resize processes new images before WordPress stores them in the media library.
+10T Web Design Image Resize processes new images before WordPress stores them in the media library.
 
-* Convert JPEG and PNG uploads to WebP.
+* Convert JPEG (including .jfif), PNG, and HEIC uploads to WebP.
 * Resize oversized WebP uploads; leave smaller WebP files unchanged.
 * Preserve aspect ratio without cropping or enlargement.
-* Configure maximum width, maximum height, and WebP quality under Settings > 10T Image Resize.
+* Configure maximum width, maximum height, and WebP quality under Settings > 10T Web Design Image Resize.
 * Default to a maximum width and height of 1200 pixels and quality of 82.
 * Leave GIF and SVG files unchanged, subject to WordPress's normal upload permissions.
 * Apply JPEG camera orientation before resizing.
@@ -28,11 +28,13 @@ Requires Imagick or GD with WebP encoding support. The plugin displays an admini
 
 Animated PNG and WebP preservation is not supported: processing may flatten these images. GIFs are never processed. Importers that bypass WordPress's standard upload and sideload handlers also bypass this plugin.
 
+HEIC/HEIF conversion requires Imagick built with libheif decoding support; GD alone cannot decode HEIC. WordPress 6.7 or later is required for native HEIC detection. HEIC image sequences and Live Photo motion are not preserved. Upload permissions remain controlled by WordPress.
+
 == Installation ==
 
-1. Upload the 10t-image-resize folder to /wp-content/plugins/.
-2. Activate 10T Image Resize under Plugins.
-3. Open Settings > 10T Image Resize to configure dimensions and quality.
+1. Upload the 10t-web-design-image-resize folder to /wp-content/plugins/.
+2. Activate 10T Web Design Image Resize under Plugins.
+3. Open Settings > 10T Web Design Image Resize to configure dimensions and quality.
 4. Upload new images through the media library.
 
 == Frequently Asked Questions ==
@@ -58,6 +60,13 @@ No. WordPress's normal file permissions still apply.
 An administrator notice explains the requirement. JPEG, PNG, and WebP uploads are rejected until a compatible editor is available. Other file types continue through WordPress normally.
 
 == Changelog ==
+
+= 1.2.0 =
+* Recognize .jfif JPEG uploads and convert them to WebP.
+
+= 1.1.0 =
+* Add HEIC/HEIF conversion to WebP with server capability checks.
+* Require WordPress 6.7 for native HEIC detection.
 
 = 1.0.0 =
 * Initial release with configurable dimensions and quality, WebP conversion, and server support notices.
